@@ -1,0 +1,33 @@
+name: cloud-1
+
+services:
+
+
+  wordpress:
+    image: 
+
+
+
+
+
+
+  phpmyadmin:
+
+
+
+
+
+
+  nginx:
+
+
+
+
+
+
+networks:
+
+
+volumes:
+
+
