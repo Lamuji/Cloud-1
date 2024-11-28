@@ -1,6 +1,2 @@
-wordpress_data/**/*
-nginx/**/*
-db_data/**/*
-letsencrypt/
-file/*
+
 .env
