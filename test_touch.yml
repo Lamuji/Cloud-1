@@ -1,0 +1,7 @@
+---
+- hosts: webservers
+  tasks:
+    - name: Creer un simple fichier
+      ansible.builtin.touch:
+        name: hello
+        state: present

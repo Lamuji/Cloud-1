@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  vars:
+    scaleway_access_key: "{{ lookup('env', 'SCW_ACCESS_KEY') }}"
+    scaleway_secret_key: "{{ lookup('env', 'SCW_SECRET_KEY') }}"
+    scaleway_project_id: "{{ lookup('env', 'SCW_DEFAULT_PROJECT_ID') }}"
+    scaleway_organization_id: "{{ lookup('env', 'SCW_DEFAULT_ORGANIZATION_ID') }}"
+    server_name: "scw-cloud-1"
+    server_zone: "ams1"
+
+  tasks:
+  - name: Stop server instance
+    community.general.scaleway_compute:
+      state: stopped
+      api_token: "{{scaleway_secret_key}}"
+      name: "{{ server_name }}"
+      project: "{{ scaleway_project_id }}"
+      region: "{{ server_zone }}"
+      image: 71fbae84-e539-43e3-b005-10d1fb69ea99
+      commercial_type: STARDUST1-S
+    register: server_info
+
+  - name: Display Server Details
+    debug:
+       var: server_info
