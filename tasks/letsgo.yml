@@ -1,0 +1,5 @@
+---
+- name: Compose
+  command: docker-compose up -d
+  args:
+    chdir: /home/{{ ansible_user }}/Cloud-1

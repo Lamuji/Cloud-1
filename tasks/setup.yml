@@ -1,0 +1,45 @@
+---
+- name: Mettre à Jour le Cache apt
+  apt:
+    update_cache: yes
+    cache_valid_time: 600  # 10 minutes
+
+- name: Installer les Dépendances Nécessaires
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+    state: present
+
+- name: Ajouter la Clé GPG Officielle de Docker
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Ajouter le Dépôt APT de Docker
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Installer Docker
+  apt:
+    name: docker-ce
+    state: present
+    update_cache: yes
+
+- name: Installer Docker Compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/v2.30.3/docker-compose-linux-x86_64"
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
+
+- name: Vérifier l'Installation de Docker Compose
+  command: docker-compose version
+  register: docker_compose_version_output
+
+- name: Afficher la Version de Docker Compose
+  debug:
+    msg: "{{ docker_compose_version_output.stdout }}"

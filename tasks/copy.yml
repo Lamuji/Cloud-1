@@ -1,0 +1,12 @@
+---
+- name: Créer le répertoire pour docker-compose.yml
+  file:
+    path: "/home/{{ ansible_user }}/Cloud-1"
+    state: directory
+    mode: '0755'
+
+- name: Copier le Fichier docker-compose.yml
+  template:
+    src: ../templates/docker-compose.yml.j2
+    dest: "/home/{{ ansible_user }}/Cloud-1/docker-compose.yml"
+    mode: '0644'

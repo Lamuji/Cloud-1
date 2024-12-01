@@ -1,1 +1,18 @@
 ---
+- name: Déployer la Stack Docker pour WordPress sur une VM chez Scaleway
+  hosts: myserver
+  become: true
+  vars_files:
+    - ./group_vars/all/vault.yml
+  tasks:
+    - name: Installer les dependances
+      ansible.builtin.include_tasks: setup.yml
+      tags: setup
+
+    - name: Copier les fichiers nécessaires
+      ansible.builtin.include_tasks: copy.yml
+      tags: copy
+
+    - name: Lancer Docker Compose
+      ansible.builtin.include_tasks: letsgo.yml
+      tags: deploy
