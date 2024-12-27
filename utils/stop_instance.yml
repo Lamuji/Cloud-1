@@ -1,17 +1,18 @@
 ---
 - hosts: localhost
+  connection: local
   vars_files:
     - ../group_vars/all/vault.yml
   tasks:
   - name: Stop server instance
     community.general.scaleway_compute:
       state: stopped
-      api_token: {{ scw_secret_key }}
-      name: {{ server_name_1 }}
-      project: {{ scw_default_project_id }}
-      region: {{ server_zone_1 }}
-      image: {{ image_1 }}
-      commercial_type: {{ commercial_type }}
+      api_token: "{{ scw_secret_key }}"
+      name: "{{ server_name_1 }}"
+      project: "{{ scw_default_project_id }}"
+      region: "{{ server_zone_1 }}"
+      image: "{{ image_1 }}"
+      commercial_type: "{{ commercial_type }}"
     register: server_info
 
   - name: Display Server Details

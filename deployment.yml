@@ -6,13 +6,13 @@
     - ./group_vars/all/vault.yml
   tasks:
     - name: Installer les dependances
-      ansible.builtin.include_tasks: setup.yml
+      ansible.builtin.include_tasks: task/setup.yml
       tags: setup
 
     - name: Copier les fichiers nécessaires
-      ansible.builtin.include_tasks: copy.yml
+      ansible.builtin.include_tasks: task/copy.yml
       tags: copy
 
     - name: Lancer Docker Compose
-      ansible.builtin.include_tasks: letsgo.yml
+      ansible.builtin.include_tasks: task/letsgo.yml
       tags: deploy
