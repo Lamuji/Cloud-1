@@ -14,13 +14,33 @@
       - software-properties-common
     state: present
 
-- name: Installer Docker et Docker-compose
+- name: Ajouter la Clé GPG Officielle de Docker
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Ajouter le Dépôt APT de Docker
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Vérifier si Docker est installé
+  command: which docker
+  register: docker_check
+  ignore_errors: yes
+
+- name: Installer Docker si non installé
   apt:
-    name:
-      - docker.io
-      - docker-compose
+    name: docker-ce
     state: present
     update_cache: yes
+  when: docker_check.rc != 0
+
+- name: Installer Docker Compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/v2.30.3/docker-compose-linux-x86_64"
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
 
 - name: Vérifier l'Installation de Docker Compose
   command: docker-compose version
